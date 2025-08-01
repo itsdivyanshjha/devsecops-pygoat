@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     dnsutils \
     libpq-dev \
     python3-dev \
+    build-essential \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
