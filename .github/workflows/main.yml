@@ -44,13 +44,10 @@ jobs:
      run: docker build -f Dockerfile -t myapp:latest .
 
    - name: Docker Scout Scan
-     uses: docker/scout-action@v1.0.9
-     with:
-       dockerhub-user: ${{ secrets.REPO_USER }}
-       dockerhub-password: ${{ secrets.REPO_PWD }}
-       command: quickview,cves
-       only-severities: critical,high
-       sarif-file: scout-report.sarif
+     run: |
+       docker scout cves --format sarif --output scout-report.sarif myapp:latest
+     env:
+       DOCKER_SCOUT_DISABLE_TELEMETRY: true
 
    - name: Upload Artifact
      uses: actions/upload-artifact@v4
