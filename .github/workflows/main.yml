@@ -43,11 +43,13 @@ jobs:
    - name: Build Docker Image
      run: docker build -f Dockerfile -t myapp:latest .
 
-   - name: Docker Scout Scan
-     run: |
-       docker scout cves --format sarif --output scout-report.sarif myapp:latest
-     env:
-       DOCKER_SCOUT_DISABLE_TELEMETRY: true
+   - name: Install Trivy
+     uses: aquasecurity/trivy-action@master
+     with:
+       image-ref: 'myapp:latest'
+       format: 'sarif'
+       output: 'scout-report.sarif'
+       severity: 'CRITICAL,HIGH'
 
    - name: Upload Artifact
      uses: actions/upload-artifact@v4
