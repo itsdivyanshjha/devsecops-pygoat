@@ -43,6 +43,9 @@ jobs:
    - name: Build Docker Image
      run: docker build -f Dockerfile -t myapp:latest .
 
+   - name: List Docker Images
+     run: docker images
+
    - name: Docker Scout Scan
      uses: docker/scout-action@v1.0.9
      with:
@@ -51,6 +54,7 @@ jobs:
        command: quickview,cves
        only-severities: critical,high
        sarif-file: scout-report.sarif
+       image: myapp:latest
 
    - name: Upload Artifact
      uses: actions/upload-artifact@v4
